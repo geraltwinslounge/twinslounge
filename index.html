@@ -207,14 +207,17 @@
 
   <!-- Controles de navegação -->
   <div class="w-full flex justify-between mt-4 px-6">
-    <button id="lightbox-prev"
-            class="text-white text-4xl font-bold hover:scale-110 transition">
-      &#10094;
-    </button>
-    <button id="lightbox-next"
-            class="text-white text-4xl font-bold hover:scale-110 transition">
-      &#10095;
-    </button>
+    <!-- Botão anterior -->
+<button id="lightbox-prev" type="button"
+        class="absolute bottom-6 left-6 md:left-10 text-white text-4xl font-bold hover:scale-110 transition">
+  &#10094;
+</button>
+
+<!-- Botão seguinte -->
+<button id="lightbox-next" type="button"
+        class="absolute bottom-6 right-6 md:right-10 text-white text-4xl font-bold hover:scale-110 transition">
+  &#10095;
+</button>
   </div>
 </div>
 </section>
@@ -387,8 +390,9 @@
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   });
 
-  // ==== LIGHTBOX COM NAVEGAÇÃO (sem fechar ao clicar fora) ====
-  const gallery = Array.from(document.querySelectorAll('#galeria img'));
+    // ==== LIGHTBOX GALERIA (corrigido para navegação circular sem duplo clique) ====
+  const gallery = Array.from(document.querySelectorAll('#galeria img'))
+                       .filter(img => img.id !== 'lightbox-img');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   const lightboxClose = document.getElementById('lightbox-close');
@@ -397,38 +401,43 @@
 
   let currentIndex = 0;
 
-  function showImage(index) {
-    currentIndex = index;
+  function updateImage() {
     lightboxImg.src = gallery[currentIndex].src;
+  }
+
+  function openLightbox(index) {
+    currentIndex = index;
+    updateImage();
     lightbox.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
   }
 
   function closeLightbox() {
     lightbox.classList.add('hidden');
-    lightboxImg.src = '';
     document.body.style.overflow = '';
   }
 
-  function showPrev() {
+  function showPrev(e) {
+    if (e) e.preventDefault();
     currentIndex = (currentIndex - 1 + gallery.length) % gallery.length;
-    lightboxImg.src = gallery[currentIndex].src;
+    updateImage();
   }
 
-  function showNext() {
+  function showNext(e) {
+    if (e) e.preventDefault();
     currentIndex = (currentIndex + 1) % gallery.length;
-    lightboxImg.src = gallery[currentIndex].src;
+    updateImage();
   }
 
-  // Abrir
+  // Abrir ao clicar numa miniatura
   gallery.forEach((img, idx) => {
-    img.addEventListener('click', () => showImage(idx));
+    img.addEventListener('click', () => openLightbox(idx));
   });
 
-  // Botões
-  lightboxClose.addEventListener('click', closeLightbox);
+  // Navegação
   prevBtn.addEventListener('click', showPrev);
   nextBtn.addEventListener('click', showNext);
+  lightboxClose.addEventListener('click', closeLightbox);
 
   // Teclado
   document.addEventListener('keydown', (e) => {
