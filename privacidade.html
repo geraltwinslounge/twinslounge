@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política de Privacidade - Twins Lounge</title>
+  <meta name="description" content="Política de Privacidade do Twins Lounge — saiba como tratamos os seus dados.">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link rel="icon" href="img/logo.jpg">
+</head>
+<body class="bg-white text-gray-800 flex flex-col min-h-screen">
+
+  <!-- NAVBAR -->
+  <header class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <img src="img/logo.jpg" alt="Twins Lounge" class="h-10 w-auto">
+        <span class="text-lg font-bold text-[#04604D]">Twins Lounge</span>
+      </a>
+      <nav class="hidden md:flex space-x-6 font-medium text-gray-700">
+        <a href="index.html#home" class="hover:text-[#04604D]">Home</a>
+        <a href="index.html#espaco" class="hover:text-[#04604D]">O Espaço</a>
+        <a href="index.html#galeria" class="hover:text-[#04604D]">Galeria</a>
+        <a href="index.html#precos" class="hover:text-[#04604D]">Preços</a>
+        <a href="index.html#contactos" class="hover:text-[#04604D]">Contactos</a>
+      </nav>
+      <!-- Botão menu mobile -->
+      <button id="menu-btn" class="md:hidden text-gray-700 text-3xl focus:outline-none">&#9776;</button>
+    </div>
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+      <nav class="flex flex-col space-y-2 p-4 text-gray-700 font-medium">
+        <a href="index.html#home" class="hover:text-[#04604D]">Home</a>
+        <a href="index.html#espaco" class="hover:text-[#04604D]">O Espaço</a>
+        <a href="index.html#galeria" class="hover:text-[#04604D]">Galeria</a>
+        <a href="index.html#precos" class="hover:text-[#04604D]">Preços</a>
+        <a href="index.html#contactos" class="hover:text-[#04604D]">Contactos</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="pt-28 pb-16 max-w-3xl mx-auto px-4 flex-grow">
+    <h1 class="text-3xl font-bold text-[#04604D] mb-6 text-center">Política de Privacidade</h1>
+    <p class="mb-4">
+      O Twins Lounge não recolhe nem armazena dados pessoais através deste website. Todo o contacto é feito diretamente
+      pelo utilizador via WhatsApp, telefone ou e-mail, sendo os dados fornecidos utilizados apenas para responder ao
+      pedido efetuado.
+    </p>
+    <p class="mb-4">
+      Não utilizamos cookies para fins de marketing nem partilhamos dados pessoais com terceiros. Caso contacte o Twins
+      Lounge, os dados fornecidos serão usados apenas para comunicação direta e não serão guardados após o fim do
+      contacto.
+    </p>
+    <p>
+      Para mais informações sobre a proteção de dados, pode contactar-nos através do email <u><a href="mailto:geral.twinslounge@gmail.com">geral.twinslounge@gmail.com</a></u>.
+    </p>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-6 bg-white text-center text-sm text-gray-600 mt-auto">
+    <p>&copy; <span id="year"></span> Twins Lounge — Todos os direitos reservados</p>
+    <p class="mt-2 space-x-4">
+      <a href="https://www.livroreclamacoes.pt/inicio" target="_blank" rel="noopener"
+         class="text-[#04604D] underline hover:text-[#034c3e]">
+        Livro de Reclamações</a>
+      <a href="privacidade.html" class="text-[#04604D] underline hover:text-[#034c3e]">
+        Política de Privacidade</a>
+    </p>
+  </footer>
+   <noscript>© 2025 Twins Lounge — Todos os direitos reservados</noscript>
+
+  <script>
+    // Atualiza automaticamente o ano
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.addEventListener('DOMContentLoaded', () => {
+    // ===== Mobile Menu =====
+    const menuBtn    = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen   = document.getElementById('icon-open');
+    const iconClose  = document.getElementById('icon-close');
+
+    function closeMenu() {
+      if (!mobileMenu) return;
+      mobileMenu.classList.add('hidden');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+      if (iconOpen) iconOpen.classList.remove('hidden');
+      if (iconClose) iconClose.classList.add('hidden');
+    }
+    function openMenu() {
+      if (!mobileMenu) return;
+      mobileMenu.classList.remove('hidden');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
+      if (iconOpen) iconOpen.classList.add('hidden');
+      if (iconClose) iconClose.classList.remove('hidden');
+    }
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        const isHidden = mobileMenu.classList.contains('hidden');
+        isHidden ? openMenu() : closeMenu();
+      });
+      // Fecha ao clicar num link
+      document.querySelectorAll('#mobile-menu a').forEach(a => {
+        a.addEventListener('click', closeMenu);
+      });
+      // Fecha se voltar a desktop
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) closeMenu();
+      });
+    }
+
+     // ===== Ano automático =====
+    const yearEl = document.getElementById('current-year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  });
+  </script>
+</body>
+</html>
